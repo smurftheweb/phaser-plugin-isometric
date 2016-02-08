@@ -1,0 +1,6 @@
+C:\Users\Rob\Source\Repos\phaser-plugin-isometric\typescript\bin\typescript.dll.config
+C:\Users\Rob\Source\Repos\phaser-plugin-isometric\typescript\bin\typescript.dll
+C:\Users\Rob\Source\Repos\phaser-plugin-isometric\typescript\bin\typescript.pdb
+C:\Users\Rob\Source\Repos\phaser-plugin-isometric\typescript\obj\Debug\typescript.csprojResolveAssemblyReference.cache
+C:\Users\Rob\Source\Repos\phaser-plugin-isometric\typescript\obj\Debug\typescript.dll
+C:\Users\Rob\Source\Repos\phaser-plugin-isometric\typescript\obj\Debug\typescript.pdb
