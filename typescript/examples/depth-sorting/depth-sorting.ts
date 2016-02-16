@@ -35,7 +35,7 @@ class DepthSorting {
 
         // Let's make a load of cubes on a grid, but do it back-to-front so they get added out of order.
         var cube: ExampleCube;
-        var sprite: Phaser.Sprite;
+        var sprite: ExampleCube;
         for (var xx = 256; xx > 0; xx -= 48) {
             for (var yy = 256; yy > 0; yy -= 48) {
                 // Create a cube using the new game.add.isoSprite factory method at the specified position.
@@ -43,16 +43,13 @@ class DepthSorting {
                 
                 // For typescript, we can't use game.add.isoSprite, we have to use iso instead.
                 // As we can't inject variables easily, we use a class to hold the sprite and oldZ.
-                sprite = this.iso.addIsoSprite(xx, yy, 0, 'cube', 0);
+                sprite = new ExampleCube(this.game, xx, yy, 0, 'cube', 0, this.isoGroup);
+                sprite.oldZ = sprite.z;
                 sprite.anchor.setTo(0.5);
 
                 // Add a slightly different tween to each cube so we can see the depth sorting working more easily.
                 this.game.add.tween(sprite).to({ isoZ: 10 }, 100 * ((xx + yy) % 10),
                                                 Phaser.Easing.Quadratic.InOut, true, 0, Infinity, true);
-
-                // Store the old messed up ordering so we can compare the two later.
-                cube = new ExampleCube(sprite, sprite.z);
-                this.isoGroup.add(cube);
             }
         }
 
@@ -63,7 +60,7 @@ class DepthSorting {
         this.game.input.onDown.add(function () {
             this.sorted = !this.sorted;
             if (this.sorted) {
-                this.iso.simpleSort(this.isoGroup);
+                this.iso.projector.simpleSort(this.isoGroup);
             }
             else {
                 this.isoGroup.sort('oldZ');
@@ -80,9 +77,14 @@ class DepthSorting {
     }
 }
 
-class ExampleCube {
+class ExampleCube extends Phaser.Plugin.Isometric.IsoSprite {
 
-    constructor(cube: Phaser.Sprite, oldZ: number) { }
+    public oldZ: number;
+
+    constructor(game: Phaser.Game, x: number, y: number, z: number, key: string, frame: number, group: Phaser.Group) {
+        super(game, x, y, z, key, frame);
+        group.add(this);
+    }
 }
 
 window.onload = () => {

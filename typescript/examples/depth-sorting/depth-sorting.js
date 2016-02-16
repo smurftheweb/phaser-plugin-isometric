@@ -2,6 +2,11 @@
 /// <reference path="../../libs/p2.d.ts" />
 /// <reference path="../../libs/pixi.d.ts" />
 /// <reference path="../../dist/phaser.plugin.isometric.d.ts" />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var DepthSorting = (function () {
     function DepthSorting() {
         this.game = new Phaser.Game(800, 600, Phaser.AUTO, 'content', { preload: this.preload, create: this.create, update: this.update, render: this.render });
@@ -25,13 +30,11 @@ var DepthSorting = (function () {
                 // The last parameter is the group you want to add it to (just like game.add.sprite)
                 // For typescript, we can't use game.add.isoSprite, we have to use iso instead.
                 // As we can't inject variables easily, we use a class to hold the sprite and oldZ.
-                sprite = this.iso.addIsoSprite(xx, yy, 0, 'cube', 0);
+                sprite = new ExampleCube(this.game, xx, yy, 0, 'cube', 0, this.isoGroup);
+                sprite.oldZ = sprite.z;
                 sprite.anchor.setTo(0.5);
                 // Add a slightly different tween to each cube so we can see the depth sorting working more easily.
                 this.game.add.tween(sprite).to({ isoZ: 10 }, 100 * ((xx + yy) % 10), Phaser.Easing.Quadratic.InOut, true, 0, Infinity, true);
-                // Store the old messed up ordering so we can compare the two later.
-                cube = new ExampleCube(sprite, sprite.z);
-                this.isoGroup.add(cube);
             }
         }
         // Just a var so we can tell if the group is sorted or not.
@@ -40,7 +43,7 @@ var DepthSorting = (function () {
         this.game.input.onDown.add(function () {
             this.sorted = !this.sorted;
             if (this.sorted) {
-                this.iso.simpleSort(this.isoGroup);
+                this.iso.projector.simpleSort(this.isoGroup);
             }
             else {
                 this.isoGroup.sort('oldZ');
@@ -54,11 +57,14 @@ var DepthSorting = (function () {
     };
     return DepthSorting;
 })();
-var ExampleCube = (function () {
-    function ExampleCube(cube, oldZ) {
+var ExampleCube = (function (_super) {
+    __extends(ExampleCube, _super);
+    function ExampleCube(game, x, y, z, key, frame, group) {
+        _super.call(this, game, x, y, z, key, frame);
+        group.add(this);
     }
     return ExampleCube;
-})();
+})(Phaser.Plugin.Isometric.IsoSprite);
 window.onload = function () {
     var game = new DepthSorting();
 };
