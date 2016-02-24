@@ -26,6 +26,7 @@
     <Content Include="dist\phaser-plugin-isometric.min.js" />
     <Content Include="examples\basic-character-movement\index.html" />
     <Content Include="examples\character-camera-follow\index.html" />
+    <Content Include="examples\cube.js" />
     <Content Include="examples\cube.png" />
     <Content Include="examples\depth-sorting\depth-sorting.js" />
     <Content Include="examples\depth-sorting\index.html" />
@@ -33,6 +34,7 @@
     <Content Include="examples\pointer-interaction\index.html" />
     <Content Include="examples\pointer-interaction\pointer-interaction.js" />
     <Content Include="examples\realtime-depth-sorting\index.html" />
+    <Content Include="examples\realtime-depth-sorting\realtime-depth-sorting.js" />
     <Content Include="examples\tile.png" />
     <Content Include="index.html" />
     <Content Include="libs\phaser.js" />
@@ -49,8 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="dist\phaser.plugin.isometric.d.ts" />
+    <TypeScriptCompile Include="examples\cube.ts" />
     <TypeScriptCompile Include="examples\depth-sorting\depth-sorting.ts" />
     <TypeScriptCompile Include="examples\pointer-interaction\pointer-interaction.ts" />
+    <TypeScriptCompile Include="examples\realtime-depth-sorting\realtime-depth-sorting.ts" />
     <TypeScriptCompile Include="libs\p2.d.ts" />
     <TypeScriptCompile Include="libs\phaser.d.ts" />
     <TypeScriptCompile Include="libs\pixi.d.ts" />
